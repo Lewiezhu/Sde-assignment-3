@@ -1,21 +1,14 @@
 package edu.hz;
 
-import edu.hz.io.*;
-import edu.hz.statement.HZMissionStatement;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        // define
-        ConsoleWriter writer = new ConsoleWriter();
-        ConsoleReader reader = new ConsoleReader();
+        Shop shop = Shop.getInstance();
 
-        // execute
-        HZMissionStatement HZIP = new HZMissionStatement();
-
-        writer.writeLines(HZIP.getFirstAmbition());
-//        reader.readLine();
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to the shop!");
     }
 }
