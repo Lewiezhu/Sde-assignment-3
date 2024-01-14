@@ -1,9 +1,9 @@
 package edu.hz.products;
 
 // Factory Method Pattern
-public class LaptopFactory implements ProductFactory {
+public class SwordFactory implements ProductFactory {
     @Override
     public Product createProduct() {
-        return new Laptop();
+        return new Sword();
     }
 }

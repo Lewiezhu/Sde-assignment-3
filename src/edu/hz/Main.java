@@ -2,6 +2,7 @@ package edu.hz;
 
 import edu.hz.commands.PurchaseCommand;
 import edu.hz.commands.ShopCommand;
+import edu.hz.products.*;
 
 import java.util.Scanner;
 
@@ -12,11 +13,29 @@ public class Main {
 // Creating the real shop as a Singleton
         Shop realShop = RealShop.getInstance();
 
+        // Using the Factory Method Pattern
+        ProductFactory swordFactory = new SwordFactory();
+        ProductFactory smartphoneFactory = new ArmorFactory();
+        ProductFactory potionFactory = new PotionFactory();
+
+        Product sword = swordFactory.createProduct();
+        Product armor = smartphoneFactory.createProduct();
+        Product potion = potionFactory.createProduct();
+
+        ProductGroup beginnersPackage= new ProductGroup("Beginner's Package");
+        beginnersPackage.addProduct(sword);
+        beginnersPackage.addProduct(armor);
+        beginnersPackage.addProduct(potion);
+
+
+
         // Creating the shop proxy
         ShopProxy shopProxy = new ShopProxy(realShop);
 
-        ShopCommand purchaseLaptopCommand = new PurchaseCommand(laptop);
-        ShopCommand purchaseSmartphoneCommand = new PurchaseCommand(smartphone);
+        ShopCommand purchaseSwordCommand = new PurchaseCommand(sword);
+        ShopCommand purchaseArmorCommand = new PurchaseCommand(armor);
+        ShopCommand purchasePotionCommand = new PurchaseCommand(potion);
+
 
 
         Scanner scanner = new Scanner(System.in);
@@ -41,24 +60,28 @@ public class Main {
         }
         // Display available products
         System.out.println("\nAvailable Products:");
-        System.out.println("1. Laptop");
-        System.out.println("2. Smartphone");
-        System.out.println("3. Electronics Group");
+        System.out.println("1. Sword");
+        System.out.println("2. Armor");
+        System.out.println("3. Potion");
+        System.out.println("4. Beginnner's Package");
 
         // Get user choice
-        System.out.print("\nEnter your choice (1-3): ");
+        System.out.print("\nEnter your choice (1-4): ");
         int userChoice = scanner.nextInt();
 
         // Execute commands based on user choice
         switch (userChoice) {
             case 1:
-                purchaseLaptopCommand.execute();
+                purchaseSwordCommand.execute();
                 break;
             case 2:
-                purchaseSmartphoneCommand.execute();
+                purchaseArmorCommand.execute();
                 break;
             case 3:
-                System.out.println("Price of Electronics Group: $" + electronicsGroup.getPrice());
+                purchasePotionCommand.execute();
+                break;
+            case 4:
+                System.out.println("Price of Beginner's Package: $" + beginnersPackage.getPrice());
                 break;
             default:
                 System.out.println("Invalid choice. Exiting...");

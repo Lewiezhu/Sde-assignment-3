@@ -1,14 +1,13 @@
 package edu.hz.products;
 
-// Factory Method Pattern
-public class Laptop implements Product {
+public class Potion implements Product{
     @Override
     public String getName() {
-        return "Laptop";
+        return "Potion";
     }
 
     @Override
     public double getPrice() {
-        return 1000.0;
+        return 200;
     }
 }
