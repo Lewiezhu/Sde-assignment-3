@@ -1,6 +1,6 @@
 package edu.hz;
 
-class ShopProxy implements Shop {
+public class ShopProxy implements Shop {
     private Shop realShop;
     private boolean isAuthenticated;
 

@@ -1,4 +1,6 @@
-package edu.hz;
+package edu.hz.tests;
+
+import edu.hz.RealShop;
 
 public class SingletonTest {
     public static void main(String[] args) {

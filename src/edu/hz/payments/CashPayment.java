@@ -1,6 +1,4 @@
-package edu.hz;
-
-import edu.hz.PaymentStrategy;
+package edu.hz.payments;
 
 public class CashPayment implements PaymentStrategy {
     @Override

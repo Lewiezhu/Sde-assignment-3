@@ -1,7 +1,7 @@
-package edu.hz;
+package edu.hz.products;
 
 // Factory Method Pattern
-class Laptop implements Product {
+public class Laptop implements Product {
     @Override
     public String getName() {
         return "Laptop";

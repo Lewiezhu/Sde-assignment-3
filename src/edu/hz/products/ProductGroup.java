@@ -1,4 +1,6 @@
-package edu.hz;
+package edu.hz.products;
+
+import edu.hz.products.Product;
 
 import java.util.ArrayList;
 import java.util.List;

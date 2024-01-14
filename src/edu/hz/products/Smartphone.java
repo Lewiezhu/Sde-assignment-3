@@ -1,7 +1,9 @@
-package edu.hz;
+package edu.hz.products;
+
+import edu.hz.products.Product;
 
 // Factory Method Pattern
-class Smartphone implements Product {
+public class Smartphone implements Product {
     @Override
     public String getName() {
         return "Smartphone";

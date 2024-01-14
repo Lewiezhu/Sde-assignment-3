@@ -1,6 +1,6 @@
 package edu.hz;
 
-class RealShop implements Shop {
+public class RealShop implements Shop {
     private static RealShop instance;
 
     private RealShop() {

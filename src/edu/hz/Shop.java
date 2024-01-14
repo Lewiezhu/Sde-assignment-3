@@ -1,5 +1,5 @@
 package edu.hz;
 
-interface Shop {
+public interface Shop {
     void enterShop();
 }

@@ -1,4 +1,4 @@
-package edu.hz;
+package edu.hz.products;
 
 // Factory Method Pattern
 public class LaptopFactory implements ProductFactory {
