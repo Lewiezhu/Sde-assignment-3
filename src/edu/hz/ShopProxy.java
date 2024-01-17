@@ -11,7 +11,7 @@ public class ShopProxy implements Shop {
 
     public void authenticate(String password) {
         // Simplified authentication logic
-        if ("darkness".equals(password)) {
+        if ("darkness".equals(password.toLowerCase().trim())) {
             isAuthenticated = true;
             System.out.println("That is indeed correct!");
         } else {
