@@ -1,6 +1,9 @@
 package edu.hz;
 
 import edu.hz.commands.*;
+import edu.hz.payments.CashPayment;
+import edu.hz.payments.CreditCardPayment;
+import edu.hz.payments.PaymentStrategy;
 import edu.hz.products.*;
 
 import java.util.Scanner;
@@ -27,6 +30,10 @@ public class Main {
         beginnersPackage.addProduct(sword);
         beginnersPackage.addProduct(armor);
         beginnersPackage.addProduct(potion);
+
+        // Strategy Pattern
+        PaymentStrategy creditCardPayment = new CreditCardPayment();
+        PaymentStrategy cashPayment = new CashPayment();
 
 
         // Creating the shop proxy
@@ -67,20 +74,25 @@ public class Main {
             // Get user choice
             System.out.print("\nEnter your choice (1-6): ");
             int userChoice = scanner.nextInt();
+            Product toPurchase = null;
 
             // Execute commands based on user choice
             switch (userChoice) {
                 case 1:
                     new PurchaseCommand(sword, adventurerInventory).execute();
+                    toPurchase = sword;
                     break;
                 case 2:
                     new PurchaseCommand(armor, adventurerInventory).execute();
+                    toPurchase = armor;
                     break;
                 case 3:
                     new PurchaseCommand(potion, adventurerInventory).execute();
+                    toPurchase = potion;
                     break;
                 case 4:
                     new PurchaseCommand(beginnersPackage, adventurerInventory).execute();
+                    toPurchase = beginnersPackage;
                     break;
                 case 5:
                     new InventoryCommand(adventurerInventory).execute();
@@ -90,6 +102,29 @@ public class Main {
                     break;
                 default:
                     System.out.println("Invalid choice. Exiting...");
+            }
+
+            if ( userChoice >=1 && userChoice<5 ) {
+                // Choose a payment method
+                System.out.println("\nChoose a payment method:");
+                System.out.println("1. Credit Card");
+                System.out.println("2. Cash");
+
+                // Get user payment choice
+                System.out.print("\nEnter your payment choice (1-2): ");
+                int paymentChoice = scanner.nextInt();
+
+                // Execute payment based on user choice
+                switch (paymentChoice) {
+                    case 1:
+                        creditCardPayment.pay(toPurchase.getPrice());
+                        break;
+                    case 2:
+                        cashPayment.pay(toPurchase.getPrice());
+                        break;
+                    default:
+                        System.out.println("Invalid payment choice. Exiting...");
+                }
             }
             if (!exit) {
                 System.out.print("\nDo you want to buy something else? (y/n): ");
