@@ -25,6 +25,25 @@ public class RealShop implements Shop {
 ``` 
 #### Explanation:
 Every time I call RealShop.getInstance(), it returns the single instance of RealShop, ensuring that I'm always working with the same shop instance and that there can be only one shop in the whole application.
+#### TestCode:
+```
+public class SingletonTest {
+    public static void main(String[] args) {
+        // Attempt to create multiple instances
+        RealShop shop1 = RealShop.getInstance();
+        RealShop shop2 = RealShop.getInstance();
+
+        // Check if both references point to the same instance
+        if (shop1 == shop2) {
+            System.out.println("Shop is a singleton because both references point to the same instance.");
+        } else {
+            System.out.println("Shop is not a singleton because multiple instances were created.");
+        }
+    }
+}
+```
+#### Explanation:
+This testcode test if every new shop we made points to the same instance to prove that the Singleton Pattern is being implemented. 
 
 ### Factory
 #### Code:
@@ -85,7 +104,7 @@ public class ShopProxy implements Shop {
 }
 ```   
 #### Explanation:
-The class ShopProxy I made acts as a proxy for realShop, A user has to be authenticated through the proxy otherwise to get access to the RealShop. In our case, you have to answer a riddle through the proxy and if the answer is not equal to the answer in the proxy you will be denied.
+The class ShopProxy I made acts as a proxy for realShop, A user has to be authenticated through the proxy otherwise to get access to the RealShop. In our case, you have to answer a riddle through the proxy and if the answer is not equal to the answer in the proxy you will be denied and kicked out of the shop and end the running code.
 
 ### Composite
 #### Code:
@@ -164,10 +183,10 @@ public class PurchaseCommand implements ShopCommand {
     }
 }
 
-public class InventoryCommand implements ShopCommand {
+public class ShowInventoryCommand implements ShopCommand {
     private Inventory inventory;
 
-    public InventoryCommand(Inventory inventory) {
+    public ShowInventoryCommand(Inventory inventory) {
         this.inventory = inventory;
     }
 
@@ -178,78 +197,60 @@ public class InventoryCommand implements ShopCommand {
     }}
  ```    
 #### Explanation:
-The interface ShopCommand holds the method execute() that the PurchaseCommand and InventoryCommand must implement. InventoryCommand encapsulates the operation to display the adventurer's inventory. PurchaseCommand encapsulates the purchase operation. It stores the purchased product, inventory and paymentStrategy.
+The interface ShopCommand holds the method execute() that the PurchaseCommand and ShowInventoryCommand must implement. ShowInventoryCommand encapsulates the operation to display the adventurer's inventory. PurchaseCommand encapsulates the purchase operation. It stores the purchased product, inventory and paymentStrategy.
 
 ``` 
-while (!exit && shopProxy.isAuthenticated()) {
-            // Display available products
-            System.out.println("\nAvailable Products:");
-            System.out.println("1. Sword");
-            System.out.println("2. Armor");
-            System.out.println("3. Potion");
-            System.out.println("4. Beginner's Package");
-            System.out.println("\nOther options");
-            System.out.println("5. Check inventory");
-            System.out.println("6. Exit");
+int userChoice = scanner.nextInt();
+Product toPurchase = null;
 
-            // Get user choice
-            System.out.print("\nEnter your choice (1-6): ");
-            int userChoice = scanner.nextInt();
-            Product toPurchase = null;
+// Execute commands based on user choice
+switch (userChoice) {
+    case 1:
+        toPurchase = sword;
+        break;
+    case 2:
+        toPurchase = armor;
+        break;
+    case 3:
+        toPurchase = potion;
+        break;
+    case 4:
+        toPurchase = beginnersPackage;
+        break;
+    case 5:
+        new ShowInventoryCommand(adventurerInventory).execute();
+        break;
+    case 6:
+        exit = true;
+        break;
+    default:
+        System.out.println("Invalid choice. Exiting...");
+}
 
-            // Execute commands based on user choice
-            switch (userChoice) {
-                case 1:
-                    toPurchase = sword;
-                    break;
-                case 2:
-                    toPurchase = armor;
-                    break;
-                case 3:
-                    toPurchase = potion;
-                    break;
-                case 4:
-                    toPurchase = beginnersPackage;
-                    break;
-                case 5:
-                    new InventoryCommand(adventurerInventory).execute();
-                    break;
-                case 6:
-                    exit = true;
-                    break;
-                default:
-                    System.out.println("Invalid choice. Exiting...");
-            }
+if (userChoice >= 1 && userChoice < 5) {
+    // Choose a payment method
+    // ...
 
-            if ( userChoice >=1 && userChoice<5 ) {
-                // Choose a payment method
-                System.out.println("\nChoose a payment method:");
-                System.out.println("1. Credit Card");
-                System.out.println("2. Cash");
+    // Execute payment based on user choice
+    switch (paymentChoice) {
+        case 1:
+            paymentContext.setStrategy(new CreditCardPayment());
+            break;
+        case 2:
+            paymentContext.setStrategy(new CashPayment());
+            break;
+        default:
+            System.out.println("Invalid payment choice. Exiting...");
+    }
 
-                // Get user payment choice
-                System.out.print("\nEnter your payment choice (1-2): ");
-                int paymentChoice = scanner.nextInt();
-                PaymentContext paymentContext = new PaymentContext();
-
-                // Execute payment based on user choice
-                switch (paymentChoice) {
-                    case 1:
-                        paymentContext.setStrategy(new CreditCardPayment());
-                        break;
-                    case 2:
-                        paymentContext.setStrategy(new CashPayment());
-                        break;
-                    default:
-                        System.out.println("Invalid payment choice. Exiting...");
-                }
-                if (paymentChoice == 1||paymentChoice == 2) {
-                    new PurchaseCommand(toPurchase, adventurerInventory, paymentContext).execute();
-                }
-            }
+    if (paymentChoice == 1 || paymentChoice == 2) {
+        new PurchaseCommand(toPurchase, adventurerInventory, paymentContext).execute();
+    }
+}
 ``` 
 #### Explanation:
-When the user selects option 5, a new InventoryCommand is created with an instance of adventurerInventory and then executes the execute() method. When the user selects option 1-4, a new PurchaseCommand is created with the selected product, inventory and chosen payment strategy. The execute() method of purchaseCommand is being executed then.
+When the user selects option 5, a new ShowInventoryCommand is created with an instance of adventurerInventory and then executes the execute() method that shows the inventory. 
+After the user selects payment choice 1 or 2, a new PurchaseCommand is created with the selected product, inventory and chosen payment strategy. The execute() method of purchaseCommand is being executed then.
 
 ### Strategy
 #### Code:
