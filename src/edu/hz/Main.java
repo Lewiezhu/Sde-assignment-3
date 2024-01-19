@@ -3,6 +3,7 @@ package edu.hz;
 import edu.hz.commands.*;
 import edu.hz.payments.CashPayment;
 import edu.hz.payments.CreditCardPayment;
+import edu.hz.payments.PaymentContext;
 import edu.hz.payments.PaymentStrategy;
 import edu.hz.products.*;
 
@@ -30,11 +31,6 @@ public class Main {
         beginnersPackage.addProduct(sword);
         beginnersPackage.addProduct(armor);
         beginnersPackage.addProduct(potion);
-
-        // Strategy Pattern
-        PaymentStrategy creditCardPayment = new CreditCardPayment();
-        PaymentStrategy cashPayment = new CashPayment();
-
 
         // Creating the shop proxy
         ShopProxy shopProxy = new ShopProxy(realShop);
@@ -109,21 +105,21 @@ public class Main {
                 // Get user payment choice
                 System.out.print("\nEnter your payment choice (1-2): ");
                 int paymentChoice = scanner.nextInt();
-                PaymentStrategy paymentStrategy = null;
+                PaymentContext paymentContext = new PaymentContext();
 
                 // Execute payment based on user choice
                 switch (paymentChoice) {
                     case 1:
-                        paymentStrategy = new CreditCardPayment();
+                        paymentContext.setStrategy(new CreditCardPayment());
                         break;
                     case 2:
-                        paymentStrategy = new CashPayment();
+                        paymentContext.setStrategy(new CashPayment());
                         break;
                     default:
                         System.out.println("Invalid payment choice. Exiting...");
                 }
-                if (paymentStrategy != null) {
-                    new PurchaseCommand(toPurchase, adventurerInventory, paymentStrategy).execute();
+                if (paymentChoice == 1||paymentChoice == 2) {
+                    new PurchaseCommand(toPurchase, adventurerInventory, paymentContext).execute();
                 }
             }
             if (!exit) {
