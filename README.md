@@ -5,9 +5,9 @@ We each worked on a different pattern in our application.
 Lewie worked on implementing a Singleton, Proxy and Command pattern and 
 James worked on implementing a Factory, Composite and Strategy pattern.
 
-### Creational design patterns
-#### Singleton
-##### Code:
+## Creational design patterns
+### Singleton
+#### Code:
 ``` 
 public class RealShop implements Shop {
     private static RealShop instance;
@@ -23,11 +23,11 @@ public class RealShop implements Shop {
     }
 }
 ``` 
-##### Explanation:
+#### Explanation:
 Every time I call RealShop.getInstance(), it returns the single instance of RealShop, ensuring that I'm always working with the same shop instance and that there can be only one shop in the whole application.
 
-#### Factory
-##### Code:
+### Factory
+#### Code:
 ```
 public interface ProductFactory {
     Product createProduct();
@@ -52,12 +52,12 @@ public class PotionFactory implements ProductFactory{
     }
 }
 ``` 
-##### Explanation:
+#### Explanation:
 We have different products in our application which implement the interface 'Product' and for each of these products, we have a factory to instantiate them. Above you can see the interface ProductFactory and the different factories: SwordFactory, ArmorFactory and PotionFactory which are the concrete factories that create a specific product. Products are not instantiated directly. Instead, a factory is used to instantiate them to decouple their creation from the rest of the code.
 
-### Structural design patterns
-#### Proxy
-##### Code:
+## Structural design patterns
+### Proxy
+#### Code:
 ``` 
 public class ShopProxy implements Shop {
     private Shop realShop;
@@ -84,11 +84,11 @@ public class ShopProxy implements Shop {
     }
 }
 ```   
-##### Explanation:
+#### Explanation:
 The class ShopProxy I made acts as a proxy for realShop, A user has to be authenticated through the proxy otherwise to get access to the RealShop. In our case, you have to answer a riddle through the proxy and if the answer is not equal to the answer in the proxy you will be denied.
 
-#### Composite
-##### Code:
+### Composite
+#### Code:
 ```
 public interface Product {
     String getName();
@@ -134,12 +134,12 @@ public class ProductGroup implements Product {
     }
 }
 ```
-##### Explanation:
+#### Explanation:
 We have the interface Product which is the initial component and the interface ProductGroup which is our composite. ProductGroup implements Product so it can be seen as a product as well, but it holds a list of Products such as Armors, Swords and Potions in our case without necessarily knowing what they are.
 
-### Behavioural design patterns
-#### Command
-##### Code:
+## Behavioural design patterns
+### Command
+#### Code:
 ``` 
 public interface ShopCommand {
     void execute();
@@ -177,7 +177,7 @@ public class InventoryCommand implements ShopCommand {
         inventory.showItems();
     }}
  ```    
-##### Explanation:
+#### Explanation:
 The interface ShopCommand holds the method execute() that the PurchaseCommand and InventoryCommand must implement. InventoryCommand encapsulates the operation to display the adventurer's inventory. PurchaseCommand encapsulates the purchase operation. It stores the purchased product, inventory and paymentStrategy.
 
 ``` 
@@ -248,11 +248,11 @@ while (!exit && shopProxy.isAuthenticated()) {
                 }
             }
 ``` 
-##### Explanation:
+#### Explanation:
 When the user selects option 5, a new InventoryCommand is created with an instance of adventurerInventory and then executes the execute() method. When the user selects option 1-4, a new PurchaseCommand is created with the selected product, inventory and chosen payment strategy. The execute() method of purchaseCommand is being executed then.
 
-#### Strategy
-##### Code:
+### Strategy
+#### Code:
 ```
 public interface PaymentStrategy {
     void pay(double amount);
@@ -287,7 +287,7 @@ public class CreditCardPayment implements PaymentStrategy {
     }
 }
 ``` 
-##### Explanation:
+#### Explanation:
 For the payment of the objects, we use the Strategy Pattern to allow for different Payment methods such as Cash or CreditCard. We use the interface PaymentStrategy which has the method Pay, which the different methods implement and they only need the input of the amount that has to be paid and operate differently based on that. Currently, only the output changes from this but if for example, each payment method incurs its own additional cost, this can be relegated to these classes and also easily changed and chosen here. The PaymentContext here is used to save the PaymentStrategy being used and is used in the application as shown below.
 ```
                 // Choose a payment method
