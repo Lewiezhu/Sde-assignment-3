@@ -301,7 +301,7 @@ public class CreditCardPayment implements PaymentStrategy {
 }
 ``` 
 #### Explanation:
-For the payment of the objects, we use the Strategy Pattern to allow for different Payment methods such as Cash or CreditCard. We use the interface PaymentStrategy which has the method Pay, which the different methods implement and they only need the input of the amount that has to be paid and operate differently based on that. Currently, only the output changes from this but if for example, each payment method incurs its own additional cost, this can be relegated to these classes and also easily changed and chosen here. The PaymentContext here is used to save the PaymentStrategy being used and is used in the application as shown below.
+For the payment of the objects, we use the Strategy Pattern to allow for different Payment methods such as Cash or CreditCard. We use the interface PaymentStrategy with the method Pay, which the different concrete classes implement and they only need the input of the amount that has to be paid and operate differently based on that. Currently, only the output changes from this but if for example, each payment strategy incurs its own unique additional cost, this can be relegated to these classes and also easily changed and chosen here. The PaymentContext here is used to save the PaymentStrategy being used and is used in the application as shown below.
 ```
                 // Choose a payment method
                 System.out.println("\nChoose a payment method:");
