@@ -1,9 +1,12 @@
 # sde_assignment-3
+### Github repository
+https://github.com/Lewiezhu/Sde-assignment-3.git
 ## Introduction:
 We have made a little guild shop in the context of an RPG game using 6 different Design Patterns.
 We each worked on a different pattern in our application. 
 Lewie worked on implementing a Singleton, Proxy and Command pattern and 
 James worked on implementing a Factory, Composite and Strategy pattern.
+
 
 ## Creational design patterns
 ### Singleton
