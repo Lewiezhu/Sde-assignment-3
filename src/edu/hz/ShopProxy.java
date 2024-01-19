@@ -3,10 +3,15 @@ package edu.hz;
 public class ShopProxy implements Shop {
     private Shop realShop;
     private boolean isAuthenticated;
+    private int Attempts;
 
     public ShopProxy(Shop realShop) {
         this.realShop = realShop;
         this.isAuthenticated = false;
+        this.Attempts = 0;
+    }
+    public boolean isAuthenticated() {
+        return isAuthenticated;
     }
 
     public void authenticate(String password) {
@@ -15,7 +20,9 @@ public class ShopProxy implements Shop {
             isAuthenticated = true;
             System.out.println("That is indeed correct!");
         } else {
-            System.out.println("That is incorrect,please try again.");
+            System.out.println("Sorry, adventurer! You did not pass my so you can't enter my shop");
+            System.out.println("You get kicked out of the guild shop");
+            System.exit(0);
         }
     }
 
@@ -24,9 +31,8 @@ public class ShopProxy implements Shop {
         if (isAuthenticated) {
             realShop.enterShop();
         } else {
-            System.out.println("Sorry, adventurer! You are not allowed to access my shop without passing my test");
-            System.out.println("You get kicked out of the guild shop");
-
+            System.out.println("Sorry, adventurer! You are not allowed in my shop");
         }
+
     }
 }

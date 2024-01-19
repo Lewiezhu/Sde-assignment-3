@@ -60,7 +60,7 @@ public class Main {
         } else {
             System.out.println("Invalid choice. Please choose a valid option.");
         }
-        while (!exit) {
+        while (!exit && shopProxy.isAuthenticated()) {
             // Display available products
             System.out.println("\nAvailable Products:");
             System.out.println("1. Sword");
@@ -79,19 +79,15 @@ public class Main {
             // Execute commands based on user choice
             switch (userChoice) {
                 case 1:
-                    new PurchaseCommand(sword, adventurerInventory).execute();
                     toPurchase = sword;
                     break;
                 case 2:
-                    new PurchaseCommand(armor, adventurerInventory).execute();
                     toPurchase = armor;
                     break;
                 case 3:
-                    new PurchaseCommand(potion, adventurerInventory).execute();
                     toPurchase = potion;
                     break;
                 case 4:
-                    new PurchaseCommand(beginnersPackage, adventurerInventory).execute();
                     toPurchase = beginnersPackage;
                     break;
                 case 5:
@@ -113,17 +109,21 @@ public class Main {
                 // Get user payment choice
                 System.out.print("\nEnter your payment choice (1-2): ");
                 int paymentChoice = scanner.nextInt();
+                PaymentStrategy paymentStrategy = null;
 
                 // Execute payment based on user choice
                 switch (paymentChoice) {
                     case 1:
-                        creditCardPayment.pay(toPurchase.getPrice());
+                        paymentStrategy = new CreditCardPayment();
                         break;
                     case 2:
-                        cashPayment.pay(toPurchase.getPrice());
+                        paymentStrategy = new CashPayment();
                         break;
                     default:
                         System.out.println("Invalid payment choice. Exiting...");
+                }
+                if (paymentStrategy != null) {
+                    new PurchaseCommand(toPurchase, adventurerInventory, paymentStrategy).execute();
                 }
             }
             if (!exit) {
