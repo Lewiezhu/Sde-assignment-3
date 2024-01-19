@@ -1,9 +1,9 @@
 package edu.hz.commands;
 
-public class InventoryCommand implements ShopCommand {
+public class ShowInventoryCommand implements ShopCommand {
     private Inventory inventory;
 
-    public InventoryCommand(Inventory inventory) {
+    public ShowInventoryCommand(Inventory inventory) {
         this.inventory = inventory;
     }
 

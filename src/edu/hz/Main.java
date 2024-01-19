@@ -4,7 +4,6 @@ import edu.hz.commands.*;
 import edu.hz.payments.CashPayment;
 import edu.hz.payments.CreditCardPayment;
 import edu.hz.payments.PaymentContext;
-import edu.hz.payments.PaymentStrategy;
 import edu.hz.products.*;
 
 import java.util.Scanner;
@@ -87,7 +86,7 @@ public class Main {
                     toPurchase = beginnersPackage;
                     break;
                 case 5:
-                    new InventoryCommand(adventurerInventory).execute();
+                    new ShowInventoryCommand(adventurerInventory).execute();
                     break;
                 case 6:
                     exit = true;
