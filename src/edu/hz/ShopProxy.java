@@ -3,19 +3,16 @@ package edu.hz;
 public class ShopProxy implements Shop {
     private Shop realShop;
     private boolean isAuthenticated;
-    private int Attempts;
 
     public ShopProxy(Shop realShop) {
         this.realShop = realShop;
         this.isAuthenticated = false;
-        this.Attempts = 0;
     }
     public boolean isAuthenticated() {
         return isAuthenticated;
     }
 
     public void authenticate(String password) {
-        // Simplified authentication logic
         if ("darkness".equals(password.toLowerCase().trim())) {
             isAuthenticated = true;
             System.out.println("That is indeed correct!");
