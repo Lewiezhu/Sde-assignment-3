@@ -51,19 +51,24 @@ This testcode test if every new shop we made points to the same instance to prov
 public interface ProductFactory {
     Product createProduct();
 }
-
+```
+``` 
 public class ArmorFactory implements ProductFactory {
     @Override
     public Product createProduct() {
         return new Armor();
     }
 }
+```
+``` 
 public class SwordFactory implements ProductFactory {
     @Override
     public Product createProduct() {
         return new Sword();
     }
 }
+```
+``` 
 public class PotionFactory implements ProductFactory{
     @Override
     public Product createProduct() {
@@ -113,7 +118,8 @@ public interface Product {
     String getName();
     double getPrice();
 }
-
+```
+``` 
 public class Armor implements Product {
     @Override
     public String getName() {
@@ -125,7 +131,8 @@ public class Armor implements Product {
         return 500.0;
     }
 }
-
+```
+``` 
 public class ProductGroup implements Product {
     private List<Product> products = new ArrayList<>();
     private String groupName;
@@ -163,7 +170,8 @@ We have the interface Product which is the initial component and the interface P
 public interface ShopCommand {
     void execute();
 }
-
+```
+``` 
 public class PurchaseCommand implements ShopCommand {
     private Product product;
     private Inventory inventory;
@@ -182,7 +190,8 @@ public class PurchaseCommand implements ShopCommand {
         paymentContext.pay(product.getPrice());
     }
 }
-
+``` 
+``` 
 public class ShowInventoryCommand implements ShopCommand {
     private Inventory inventory;
 
@@ -258,7 +267,8 @@ After the user selects payment choice 1 or 2, a new PurchaseCommand is created w
 public interface PaymentStrategy {
     void pay(double amount);
 }
-
+```
+``` 
 public class PaymentContext {
     private PaymentStrategy paymentStrategy;
 
@@ -273,14 +283,16 @@ public class PaymentContext {
         paymentStrategy.pay(amount);
     }
 }
-
+``` 
+``` 
 public class CashPayment implements PaymentStrategy {
     @Override
     public void pay(double amount) {
         System.out.println("Paid with Cash: $" + amount);
     }
 }
-
+```
+``` 
 public class CreditCardPayment implements PaymentStrategy {
     @Override
     public void pay(double amount) {
